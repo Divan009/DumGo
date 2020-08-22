@@ -12,6 +12,11 @@ import (
 )
 
 func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error) {
+	// var link model.links
+	// link.Title = input.Title
+	// link.Address = input.Address
+	// linkID := link.Save()
+	// return &model.Link{ID: strconv.FormatInt(linkID, 10), Title: link.Title, Address: link.Address}, nil
 	link := model.Link{}
 	user := model.User{}
 	link.Address = input.Address
