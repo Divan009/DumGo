@@ -9,10 +9,10 @@ import (
 )
 
 var db *sql.DB
-var err error
 
 func InitDB() {
 	// Use root:dbpass@tcp(172.17.0.2)/hackernews, if you're using Windows.
+	var err error
 
 	host := "localhost"
 	port := "5432"

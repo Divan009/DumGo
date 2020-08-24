@@ -8,6 +8,7 @@ import (
 	"fmt"
 
 	"github.com/Divan009/DumGo/graph/generated"
+	"github.com/Divan009/DumGo/graph/logic"
 	"github.com/Divan009/DumGo/graph/model"
 )
 
@@ -17,13 +18,15 @@ func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) 
 	// link.Address = input.Address
 	// linkID := link.Save()
 	// return &model.Link{ID: strconv.FormatInt(linkID, 10), Title: link.Title, Address: link.Address}, nil
-	link := model.Link{}
-	user := model.User{}
-	link.Address = input.Address
-	link.Title = input.Title
-	user.Name = "test"
-	link.User = &user
-	return &link, nil
+	// link := model.Link{}
+	// user := model.User{}
+	// link.Address = input.Address
+	// link.Title = input.Title
+	// user.Name = "test"
+	// link.User = &user
+	// return &link, nil
+	panic(fmt.Errorf("not implemented"))
+
 }
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (string, error) {
@@ -39,13 +42,11 @@ func (r *mutationResolver) RefreshToken(ctx context.Context, input model.Refresh
 }
 
 func (r *queryResolver) Links(ctx context.Context) ([]*model.Link, error) {
-	var links []*model.Link
-	dummyLink := model.Link{
-		Title:   "dummy link",
-		Address: "http://address.org",
-		User:    &model.User{Name: "admin"},
+	links, err := logic.GetLinks()
+
+	if err != nil {
+		fmt.Println("Wrong mistake")
 	}
-	links = append(links, &dummyLink)
 	return links, nil
 }
 
