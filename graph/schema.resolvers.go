@@ -13,20 +13,8 @@ import (
 )
 
 func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error) {
-	// var link model.links
-	// link.Title = input.Title
-	// link.Address = input.Address
-	// linkID := link.Save()
-	// return &model.Link{ID: strconv.FormatInt(linkID, 10), Title: link.Title, Address: link.Address}, nil
-	// link := model.Link{}
-	// user := model.User{}
-	// link.Address = input.Address
-	// link.Title = input.Title
-	// user.Name = "test"
-	// link.User = &user
-	// return &link, nil
-	panic(fmt.Errorf("not implemented"))
-
+	link, err := logic.AddLink()
+	return link, err
 }
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (string, error) {

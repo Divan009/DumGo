@@ -20,24 +20,25 @@ import (
 // 	}
 // 	return orderQueueId, nil
 
-// func InsertLink(db *sql.DB) int64 {
-// 	stmt, err := db.Prepare("INSERT INTO Links(Title,Address) VALUES(?,?)")
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
+func InsertLink(link model.Link) (int64, int64, error) {
+	sqlQuery := "INSERT link SET Title = ?, Address = ?"
+	stmt, err := db.Prepare(sqlQuery)
+	defer closeStmt(stmt)
 
-// 	res, err := stmt.Exec(link.Title, link.Address)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	id, err := res.LastInsertId()
-// 	if err != nil {
-// 		log.Fatal("Error:", err.Error())
-// 	}
-// 	log.Print("Row inserted!")
-// 	return id
-// }
+	if err != nil {
+		return 0, 0, err
+	}
+	res, err := stmt.Exec(link.Title, link.Address)
+	if err != nil {
+		return 0, 0, err
+	}
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		return 0, 0, err
+	}
+	lastInsertedId, err := res.LastInsertId()
+	return rowsAffected, lastInsertedId, err
+}
 
 func GetLink(db *sql.DB) ([]*model.Link, error) {
 
@@ -68,4 +69,16 @@ func GetLink(db *sql.DB) ([]*model.Link, error) {
 		}
 	}
 	return linkss, nil
+}
+
+// func closeRows(rows *sql.Rows) {
+// 	if rows != nil {
+// 		rows.Close()
+// 	}
+// }
+
+func closeStmt(stmt *sql.Stmt) {
+	if stmt != nil {
+		stmt.Close()
+	}
 }
