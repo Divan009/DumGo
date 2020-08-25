@@ -17,6 +17,15 @@ func GetLinks() ([]*model.Link, error) {
 
 }
 
+func AddLink(title string, address string) (model.Link, error) {
+	link := model.Link{Title: title, Address: address}
+	rowsAffected, lastInsertedId, err := postgres.InsertLink(link)
+	if err == nil && rowsAffected > 0 {
+		link.ID = lastInsertedId
+	}
+	return link, err
+}
+
 // func InsertToOrderQueue(db *sql.DB) (string, error) {
 // 	db := postgres.GetDb()
 // 	timeToLive := os.Getenv("TIME_TO_LIVE")
