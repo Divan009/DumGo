@@ -13,6 +13,9 @@ To understand more about gqlgen.yml: https://gqlgen.com/config/
 Facing issue with migrate(github.com/golang-migrate/migrate v3.5.4+incompatible)
 Use go get -tags 'postgres' -u github.com/golang-migrate/migrate/v4/cmd/migrate/
 
+JWT go get github.com/dgrijalva/jwt-go
+
+
 #### Create a postgres db using pdAdmin or psql, whichever you prefer
 CREATE TABLE IF NOT EXISTS Users(
     ID INT NOT NULL UNIQUE AUTO_INCREMENT,
@@ -43,3 +46,5 @@ Postgres - I create Db and call it
 pqueries - is where i define db functions
 
 getLogic - uses the pqueries func
+
+jwt
