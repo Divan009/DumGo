@@ -13,7 +13,7 @@ import (
 )
 
 func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error) {
-	link, err := logic.AddLink()
+	link, err := logic.AddLink(input.Title, input.Address)
 	return link, err
 }
 

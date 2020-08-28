@@ -2,42 +2,53 @@ package postgres
 
 import (
 	"database/sql"
+	//"golang.org/x/crypto/bcrypt"
+	"github.com/Divan009/DumGo/graph/model"
+
 	"fmt"
 	"log"
-
-	"github.com/Divan009/DumGo/graph/model"
 )
 
-// func InsertToOrderQueue(db *sql.DB, orderQueueId string, timeToLive string, queueInput *models.NewOrderQueue) (string, error) {
-// 	query := `insert into public.orderQueue ("addedToQueueAt", "orderCreateTime", "orderQueueId", requestid, soldto, shipto, payload, timetolive, remarks, reason, type) values
-// 				('` + queueInput.AddedToQueueAt + `','` + queueInput.OrderCreatedTime + `','` + orderQueueId + `','` + queueInput.Requestid + `','` + queueInput.SoldTo + `','` + queueInput.ShipTo + `','` + queueInput.Payload + `','` + timeToLive + `','` + *queueInput.Remarks + `','` + queueInput.Reason + `','` + queueInput.Type + `')`
-// 	log.Println(query)
-// 	loguid := GetLoggerID()
-// 	_, err := db.Exec(query)
-// 	if err != nil {
-// 		Logs(WARN, loguid, "InsertToOrderQueue: "+err.Error()+"\nQuery used: "+query)
-// 		return "", err
-// 	}
-// 	return orderQueueId, nil
+func (newUser model.NewUser) Create() {
+	stmt, err := db.Prepare("INSERT INTO Users(Username,Password) VALUES(?,?)")
+	print(stmt)
+	if err != nil {
+		log.Fatal(err)
+	}
+	hashedPswd, err := HashPassword(newUser.Password)
+	_, err = stmt.Exec(newUser.Username, hashedPswd)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
 
-func InsertLink(link model.Link) (int64, int64, error) {
-	sqlQuery := "INSERT link SET Title = ?, Address = ?"
+// INSERT INTO user_new (name) VALUES ($1);
+
+// sqlQuery := "INSERT INTO todo (text, done) VALUES ($1, $2);"
+// 	stmt, err := db.Query(sqlQuery, input.Text, input.Done)
+
+//issue with the return
+
+func InsertLink(link model.Link) (int64, error) {
+	sqlQuery := "INSERT INTO links (title, address) VALUES ($1, $2);"
 	stmt, err := db.Prepare(sqlQuery)
 	defer closeStmt(stmt)
 
 	if err != nil {
-		return 0, 0, err
+		return 0, err
 	}
 	res, err := stmt.Exec(link.Title, link.Address)
 	if err != nil {
-		return 0, 0, err
+		return 0, err
 	}
+
 	rowsAffected, err := res.RowsAffected()
 	if err != nil {
-		return 0, 0, err
+		return 0, err
 	}
-	lastInsertedId, err := res.LastInsertId()
-	return rowsAffected, lastInsertedId, err
+	// lastInsertedId, err := res.LastInsertId()
+	// fmt.Println(lastInsertedId)
+	return rowsAffected, err
 }
 
 func GetLink(db *sql.DB) ([]*model.Link, error) {

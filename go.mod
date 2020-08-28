@@ -11,6 +11,7 @@ require (
 	github.com/aws/aws-sdk-go v1.34.8 // indirect
 	github.com/cockroachdb/cockroach-go v2.0.1+incompatible // indirect
 	github.com/cznic/mathutil v0.0.0-20181122101859-297441e03548 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/edsrzf/mmap-go v1.0.0 // indirect
 	github.com/go-pg/pg v8.0.7+incompatible
 	github.com/go-pg/pg/v9 v9.1.7
@@ -35,7 +36,7 @@ require (
 	github.com/vektah/gqlparser/v2 v2.0.1
 	github.com/xanzy/go-gitlab v0.36.0 // indirect
 	go.mongodb.org/mongo-driver v1.4.0 // indirect
-	golang.org/x/crypto v0.0.0-20200728195943-123391ffb6de // indirect
+	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a // indirect
 	golang.org/x/sys v0.0.0-20200819171115-d785dc25833f // indirect
 	golang.org/x/tools v0.0.0-20200820010801-b793a1359eac // indirect
 	modernc.org/ql v1.1.0 // indirect
