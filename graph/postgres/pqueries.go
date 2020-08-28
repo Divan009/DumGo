@@ -4,13 +4,14 @@ import (
 	"database/sql"
 	//"golang.org/x/crypto/bcrypt"
 	"github.com/Divan009/DumGo/graph/model"
+	"golang.org/x/crypto/bcrypt"
 
 	"fmt"
 	"log"
 )
 
 func (newUser model.NewUser) Create() {
-	stmt, err := db.Prepare("INSERT INTO Users(Username,Password) VALUES(?,?)")
+	stmt, err := db.Prepare("INSERT INTO users(username,password) VALUES(?,?)")
 	print(stmt)
 	if err != nil {
 		log.Fatal(err)
@@ -20,6 +21,17 @@ func (newUser model.NewUser) Create() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
+//CheckPassword hash compares raw password with it's hashed values
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }
 
 // INSERT INTO user_new (name) VALUES ($1);
