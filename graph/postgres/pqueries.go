@@ -10,7 +10,13 @@ import (
 	"log"
 )
 
-func (newUser model.NewUser) Create() {
+type User struct {
+	ID       string `json:"id"`
+	Username string `json:"name"`
+	Password string `json:"password"`
+}
+
+func (newUser *User) Create() {
 	stmt, err := db.Prepare("INSERT INTO users(username,password) VALUES(?,?)")
 	print(stmt)
 	if err != nil {
