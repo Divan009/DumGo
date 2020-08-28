@@ -40,6 +40,28 @@ func CheckPasswordHash(password, hash string) bool {
 	return err == nil
 }
 
+//GetUserIdByUsername check if a user exists in database by given username
+
+func GetUserIdByUsername(username string) (int, error) {
+	sqlQuery := "SELECT id FROM users WHERE username = ?"
+	statement, err := db.Prepare(sqlQuery)
+	if err != nil {
+		log.Fatal(err)
+	}
+	row := statement.QueryRow(username)
+
+	var Id int
+	err = row.Scan(&Id)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			log.Print(err)
+		}
+		return 0, err
+	}
+
+	return Id, nil
+}
+
 // INSERT INTO user_new (name) VALUES ($1);
 
 // sqlQuery := "INSERT INTO todo (text, done) VALUES ($1, $2);"
