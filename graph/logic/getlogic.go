@@ -9,6 +9,7 @@ import (
 )
 
 // getting the link
+
 func GetLinks() ([]*model.Link, error) {
 	link, err := postgres.GetLink(postgres.GetDb())
 	if err != nil {
@@ -26,16 +27,3 @@ func AddLink(title string, address string) (*model.Link, error) {
 	link.ID = strconv.FormatInt(rowsAffected, 10)
 	return &link, err
 }
-
-// func InsertToOrderQueue(db *sql.DB) (string, error) {
-// 	db := postgres.GetDb()
-// 	timeToLive := os.Getenv("TIME_TO_LIVE")
-// 	addOrderQueueResponse, err := postgres.InsertLink(title, address)
-// 	if err != nil {
-// 		// Logs(ERROR,err.Error())
-// 		return string, err
-// 	}
-// 	response := string
-// 	response.OrderQueueID = addOrderQueueResponse
-// 	return response, nil
-// }

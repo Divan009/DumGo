@@ -6,10 +6,14 @@ package graph
 import (
 	"context"
 	"fmt"
+	"log"
+
+	"github.com/Divan009/DumGo/graph/jwt"
 
 	"github.com/Divan009/DumGo/graph/generated"
 	"github.com/Divan009/DumGo/graph/logic"
 	"github.com/Divan009/DumGo/graph/model"
+	"github.com/Divan009/DumGo/graph/postgres"
 )
 
 func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error) {
@@ -18,7 +22,19 @@ func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) 
 }
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (string, error) {
-	panic(fmt.Errorf("not implemented"))
+	user := postgres.User{
+		Username: input.Username,
+		Password: input.Password,
+	}
+	// user.Username = input.Username
+	// user.Password = input.Password
+	msg, err := postgres.Create(user)
+	log.Print(msg)
+	token, err := jwt.GenerateToken(input.Username)
+	if err != nil {
+		return "", err
+	}
+	return token, nil
 }
 
 func (r *mutationResolver) Login(ctx context.Context, input model.Login) (string, error) {

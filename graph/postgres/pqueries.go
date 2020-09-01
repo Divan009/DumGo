@@ -16,17 +16,20 @@ type User struct {
 	Password string `json:"password"`
 }
 
-func (newUser *User) Create() {
+func Create(newUser User) (string, error) {
 	stmt, err := db.Prepare("INSERT INTO users(username,password) VALUES(?,?)")
 	print(stmt)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
+		return "", err
 	}
 	hashedPswd, err := HashPassword(newUser.Password)
 	_, err = stmt.Exec(newUser.Username, hashedPswd)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
+		return "", err
 	}
+	return "success", nil
 }
 
 func HashPassword(password string) (string, error) {
