@@ -52,6 +52,7 @@ func GetUserIdByUsername(username string) (int, error) {
 		log.Fatal(err)
 	}
 	row := statement.QueryRow(username)
+	//row := statement.QueryRow(username)
 
 	var Id int
 	err = row.Scan(&Id)

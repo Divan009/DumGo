@@ -1,0 +1,31 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+
+version: "3"
+
+# Define services
+services:
+  postgres:
+    build: ./graph/postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Divas009
+    ports:
+      - 5432
+
+  # App Service
+  app:
+    # Configuration for building the docker image for the service
+    build:
+      context: . # Use an image built from the specified dockerfile in the current directory.
+      dockerfile: Dockerfile
+    image: dumgoimgg
+    ports:
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: unless-stopped
+    depends_on:
+      - postgres # This service depends on redis. Start that first.
+    links:
+      - postgres
