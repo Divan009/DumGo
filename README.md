@@ -1,5 +1,7 @@
 # Dummy Go App using GQLGEN
 
+Go is used to create scalable infra. Learn more about Go here[https://golang.org/doc/install]
+
 With these lines I have the most basic structure of Go Server running
 1.	go mod init github.com/Divan009/gqlgen-todos
 2.	go get github.com/99designs/gqlgen
