@@ -2,6 +2,9 @@
 
 Go is used to create scalable infra. Learn more about [Go here](https://golang.org/doc/install) and setting up [Go in Linux](https://www.youtube.com/watch?v=R-cA6J3IniI&feature=youtu.be).
 
+### Flow of this Project
+Schema.graphqls -> schema.resolvers.go -> logic/getLogic.go -> postgres -> pqueries.go
+
 #### The first step after setting up Go, is path
 _this is for linux_
 export PATH=$PATH:/usr/local/go/bin
